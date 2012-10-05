@@ -18,7 +18,6 @@
 @chznFocusBoxShadow: ~"0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(82, 168, 236, .6)";
 @chznFocusTransition: ~"border linear .2s, box-shadow linear .2s";
 @chznHeight: @baseLineHeight + 8px; // 4px padding
-@chznSpritePath: "chosen-sprite.png";
 
 .chosen            { width: 220px; }
 .chosen-mini       { width: 70px; }
@@ -34,6 +33,7 @@
   font-size: @baseFontSize;
   position: relative;
   vertical-align: middle;
+  margin-bottom: 5px;
 
   .chzn-drop {
     background: @chznBackground;
@@ -126,27 +126,34 @@
       width: 9px;
     }
   }
+}
 
-  .chzn-results-scroll-down {
-    bottom: 0;
-
-    span {
-      background: url("@{chznSpritePath}") no-repeat -4px -3px;
-    }
-  }
-
-  .chzn-results-scroll-up {
-    span {
-      background: url("@{chznSpritePath}") no-repeat -22px -3px;
-    }
+.input-append,
+.input-prepend {
+  .chzn-container .chzn-single {
+    margin-bottom: 0px;
+    .border-radius(0 @inputBorderRadius @inputBorderRadius 0);
   }
 }
+
+.input-append {
+  .chzn-container .chzn-single {
+    .border-radius(@inputBorderRadius 0 0 @inputBorderRadius);
+  }
+}
+
+.input-append.input-prepend {
+  .chzn-container .chzn-single {
+    .border-radius(0);
+  }
+}
+
 
 .chzn-container-single {
   .chzn-single {
     background-color: @chznBackground;
     #gradient > .vertical(@white, @grayLighter);
-    //.border-radius(5px);
+    .border-radius(@chznBorderRadius);
     -webkit-background-clip: padding-box;
        -moz-background-clip: padding;
             background-clip: padding-box;
@@ -169,17 +176,25 @@
     }
 
     abbr {
-      background: url("@{chznSpritePath}") right top no-repeat;
-      display: block;
-      font-size: 1px;
-      height: 10px;
       position: absolute;
+      top: 0;
       right: 26px;
-      top: 8px;
-      width: 12px;
-
+      &:before {
+        content: '\00D7';
+        font-family: FontAwesome;
+        font-weight: bold;
+        color: @black;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+        .opacity(20);
+      }
       &:hover {
-        background-position: right -11px;
+        text-decoration: none;
+        &:before {
+          color: @black;
+          text-decoration: none;
+          cursor: pointer;
+          .opacity(40);
+        }
       }
     }
 
@@ -196,7 +211,10 @@
       width: 18px;
 
       b {
-        background: url("@{chznSpritePath}") no-repeat 0 2px;
+        &:after {
+          content: '\f078';
+          font-family: FontAwesome;
+        }
         display: block;
         height: 100%;
         width: 100%;
@@ -216,12 +234,17 @@
     z-index: @zindexDropdown;
 
     input {
-      background: url("@{chznSpritePath}") no-repeat 100% -21px, @chznBackground;
       border: 1px solid @chznBorder;
       .border-radius(@chznBorderRadius);
       .box-shadow(@chznBoxShadow);
       margin: 1px 0;
       padding: 4px 20px 4px 4px;
+    }
+    &:after {
+      content: '\f002';
+      font-family: FontAwesome;
+      position: relative;
+      right: 16px;
     }
   }
 
@@ -300,22 +323,30 @@
       color: @grayDark;
       cursor: default;
       line-height: 13px;
-      margin: 3px 0 3px 5px;
+      margin: 3px 5px;
       padding: 3px 20px 3px 5px;
       position: relative;
 
       .search-choice-close {
-        background: url("@{chznSpritePath}") right top no-repeat;
-        display: block;
-        font-size: 1px;
-        height: 13px;
         position: absolute;
         right: 3px;
-        top: 4px;
-        width: 12px;
-
+        top: 2px;
+        &:before {
+          content: '\00D7';
+          font-family: FontAwesome;
+          font-weight: bold;
+          color: @black;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+          .opacity(20);
+        }
         &:hover {
-          background-position: right -11px;
+          text-decoration: none;
+          &:before {
+            color: @black;
+            text-decoration: none;
+            cursor: pointer;
+            .opacity(40);
+          }
         }
       }
     }
@@ -453,10 +484,21 @@
     border-right: none;
   }
 
-  .chzn-search input {
-    background: url("@{chznSpritePath}") no-repeat -38px -22px, @chznBackground;
-    direction: rtl;
-    padding: 4px 5px 4px 20px;
+  .chzn-search {
+    input {
+      direction: rtl;
+      padding: 4px 5px 4px 20px;
+    }
+    &:after {
+      display: none;
+    }
+    &:before {
+      content: '\f002';
+      font-family: FontAwesome;
+      position: absolute;
+      left: 11px;
+      top: 11px;
+    }
   }
 }
 
